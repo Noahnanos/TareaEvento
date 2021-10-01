@@ -15,17 +15,6 @@ public class Persona {
 		this.fechaDeNac = fechaDeNac;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public String getRut() {
 		return rut;
 	}
