@@ -1,6 +1,7 @@
 package Modelo;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 public class Persona {
 	protected String rut;
@@ -33,6 +34,5 @@ public class Persona {
 	public void setFechaDeNac(LocalDate fechaDeNac) {
 		this.fechaDeNac = fechaDeNac;
 	}
-	
 	
 }

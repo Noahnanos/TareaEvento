@@ -35,7 +35,7 @@ public class Main {
 				new Cliente("5000000-8", "Rodrigos", LocalDate.of(1970, 8, 15))
 		));
 	
-		Vendedor vendedor1 = new Vendedor(0, "16586487-6", "Guaripolo", LocalDate.of(1990, 5, 4));
+		Vendedor vendedor1 = new Vendedor(0, 0, "16586487-6", "Guaripolo", LocalDate.of(1990, 5, 4));
 		
 		Evento evento1 = new Evento(
 				"MetalChefLive", 
@@ -43,34 +43,97 @@ public class Main {
 				LocalDateTime.of(LocalDate.of(2021, 04, 24), LocalTime.of(16, 00)),
 				normal, vip);
 		
+		venderEntradaNomal(evento1, clientes, normal, vendedor1, "16981532-8");
+		venderEntradaNomal(evento1, clientes, normal, vendedor1, "19876858-8");
+		venderEntradaVip(evento1, clientes, vip, vendedor1, "15625858-8");
+		usarEntrada(evento1, "19876858-8");
+		usarEntrada(evento1, "19876858-8");
+		System.out.println("El vendedor " + vendedor1.getNombre() + "ha vendido: \n"
+			+ vendedor1.getEntradasNormaVendidas() + " entradas normales\n"
+			+ vendedor1.getEntradasVipVendidas() + " entradas VIP"
+			
+		);
+	}
+	
+	public static void venderEntradaNomal(Evento evento, List<Cliente> clientes, List<EntradaNormal> normal, Vendedor vendedor, String rut) {
+		Cliente cliente = null;
+		EntradaNormal entrada = null;
+		normal = evento.getEntradasNormales();
 		
-		Cliente cliente1 = null;
-		EntradaNormal entrada1 = null;
-		normal = evento1.getEntradasNormales();
-		String rut =  "16981532-8";
-		String nombreEvento = "MetalChefLive";
-		
-		for(Cliente cliente: clientes) {
-			if(cliente.getRut() == rut) {
-				cliente1 = cliente;
-				entrada1 = new EntradaNormal(cliente1, evento1, 5000, 20, false);
+		for(Cliente c: clientes) {
+			if(c.getRut() == rut) {
+				cliente = c;
+				entrada = new EntradaNormal(cliente, evento, 5000, 20, false);
 			}
 		}
 		
-		if(cliente1 == null) {
+		if(cliente == null) {
 			System.out.println("No existe el clientes");
 		}else {
-			Period edad = Period.between(cliente1.getFechaDeNac(), evento1.getFechaEvento().toLocalDate());
+			int edad = cliente.obtenerEdad(evento.getFechaEvento().toLocalDate());
 			
-			System.out.println(edad.getYears());
-			if(edad.getYears() >= evento1.getEdadMinimaEvento()) {
-				System.out.println(cliente1.getNombre() + " Tiene acceso al evento");
-				evento1.agregarEntradaNormal(entrada1);
-				System.out.println(evento1.getEntradasNormales().get(0).getCliente().getNombre());
+			if(edad >= evento.getEdadMinimaEvento()) {
+				System.out.println(cliente.getNombre() + " Tiene acceso al evento");
+				evento.agregarEntradaNormal(entrada);
+				vendedor.venderEntradaNormal();
 			}else {
-				System.out.println("Vayase pa la casa");
+				System.out.println("Vayanse para la casa");
 			}
 			
+		}
+	}
+	
+	public static void venderEntradaVip(Evento evento, List<Cliente> clientes, List<EntradaVip> normal, Vendedor vendedor, String rut) {
+		Cliente cliente = null;
+		EntradaVip entrada = null;
+		normal = evento.getEntradasVip();
+		
+		for(Cliente c: clientes) {
+			if(c.getRut() == rut) {
+				cliente = c;
+				entrada = new EntradaVip("sas", cliente, evento, 5000, 20, false);
+			}
+		}
+		
+		if(cliente == null) {
+			System.out.println("No existe el clientes");
+		}else {
+			int edad = cliente.obtenerEdad(evento.getFechaEvento().toLocalDate());
+			
+			if(edad >= evento.getEdadMinimaEvento()) {
+				System.out.println(cliente.getNombre() + " Tiene acceso al evento");
+				evento.agregarEntradaVip(entrada);
+				vendedor.venderEntradaVip();
+			}else {
+				System.out.println("Vayanse para la casa");
+			}
+			
+		}
+	}
+	
+	public static void usarEntrada(Evento evento, String rut) {
+		
+		EntradaNormal eNormal = null;
+		for(EntradaNormal e: evento.getEntradasNormales()) {
+			if(e.getCliente().getRut().equals(rut)) {
+				eNormal = e;
+			}
+		}
+		
+		Period validarDia = Period.between(evento.getFechaEvento().toLocalDate(), LocalDate.of(2021, 04, 24));
+		
+		if(validarDia.getDays() == 0 && !eNormal.isEntradaUsada()) {
+			eNormal.setEntradaUsada(true);
+			System.out.println("Usando entrada con cliente "
+					+ eNormal.getCliente().getNombre() +" "
+					+ eNormal.getCliente().getRut() +"\npara evento "
+					+ eNormal.getEvento().getNombreEvento());
+		}else if(validarDia.getDays() > 0) {
+			System.out.println("El evento ya se hizo - no sea weta");
+		}else if(validarDia.getDays() < 0){
+			System.out.println("Faltan " + (validarDia.getDays()*-1) + " dia(s) para el evento.");
+		}else {
+			System.out.println("Entrada para rut "+ eNormal.getCliente().getRut() +" ya fue usada, no puede pasar.");
 		}
 	}
 

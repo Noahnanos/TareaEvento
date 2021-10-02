@@ -7,7 +7,6 @@ public class EntradaVip extends Entrada{
 			String regalo,
 			Cliente cliente, 
 			Evento evento, 
-			String nombreEvento,
 			int precio, 
 			int numeroAsiento, 
 			boolean entradaUsada) {
