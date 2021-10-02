@@ -1,14 +1,14 @@
 package Modelo;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Persona {
 	protected String rut;
 	protected String nombre;
-	protected Date fechaDeNac;
+	protected LocalDate fechaDeNac;
 	
 	
-	public Persona(String rut,String nombre,Date fechaDeNac) {
+	public Persona(String rut,String nombre, LocalDate fechaDeNac) {
 		super();
 		this.rut = rut;
 		this.nombre = nombre;
@@ -27,10 +27,10 @@ public class Persona {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public Date getFechaDeNac() {
+	public LocalDate getFechaDeNac() {
 		return fechaDeNac;
 	}
-	public void setFechaDeNac(Date fechaDeNac) {
+	public void setFechaDeNac(LocalDate fechaDeNac) {
 		this.fechaDeNac = fechaDeNac;
 	}
 	

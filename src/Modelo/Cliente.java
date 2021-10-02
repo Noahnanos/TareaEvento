@@ -1,10 +1,10 @@
 package Modelo;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Cliente extends Persona {
 	
-	public Cliente(String rut,String nombre,Date fechaDeNac) {
+	public Cliente(String rut, String nombre, LocalDate fechaDeNac) {
 		super(rut, nombre, fechaDeNac);
 	}
 }

@@ -23,6 +23,7 @@ public class Evento {
 			int limiteEntradaNormales,
 			int limiteEntradaVip,
 			int entradasVendidas,
+
 			int duracionHoras,
 			LocalDateTime fechaEvento,
 			List <EntradaNormal> entradasNormales,
@@ -40,6 +41,15 @@ public class Evento {
 	}
 	
 	
+	public void agregarEntradaVip(EntradaVip entrada) {
+		entradasVendidas += 1;
+		entradasVip.add(entrada);
+	}
+	
+	public void agregarEntradaNormal(EntradaNormal entrada) {
+		entradasVendidas += 1;
+		entradasNormales.add(entrada);
+	}
 	
 	public void verificarEdad() {
 		
